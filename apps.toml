@@ -1,13 +1,18 @@
 #:schema https://github.com/YunoHost/apps/raw/main/schemas/apps.toml.schema.json
 
 [strfry]
+added_date = 1793040021 # 2026/10/26
 category = "social_media"
+level = 6
 state = "working"
 subtags = [ "microblogging" ]
 url = "https://github.com/mkettn/strfry_ynh"
 
 [tsbridge]
+added_date = 1793040021 # 2026/10/26
+branch = "main"
 category = "system_tools"
+level = 6
 state = "working"
 subtags = [ "network" ]
 url = "https://github.com/mkettn/tsbridge_ynh"
