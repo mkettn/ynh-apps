@@ -2,8 +2,13 @@
 
 <img alt="YunoHost logo" src="https://avatars.githubusercontent.com/u/1519495?s=200&v=4" width=80><img alt="Package logo" src="https://yunohost.org/user/images/yunohost_package.png" width=80>
 
-This repository contains the default YunoHost app catalog.
-It is browsable at [apps.yunohost.org](https://apps.yunohost.org).
+This repository contains a custom YunoHost app catalog, based on the
+[default YunoHost app catalog](https://github.com/YunoHost/apps).
+
+It currently publishes:
+
+- [strfry](https://github.com/mkettn/strfry_ynh)
+- [tsbridge](https://github.com/mkettn/tsbridge_ynh)
 
 ## Where can I learn about app packaging in YunoHost?
 
