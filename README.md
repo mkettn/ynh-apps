@@ -12,8 +12,8 @@ Most of it is AI generated and packaged, and tested by me
 This is the main catalog file, containing references to the apps' repositories,
 along with a few metadata about them such as their category or maintenance state.
 
-It is regularly read by the [catalog builder](https://github.com/YunoHost/apps-tools)
-which publishes the results on <https://app.yunohost.org/default>.
+It is read by the [catalog builder](https://github.com/YunoHost/apps-tools)
+to generate this catalog. It is not published to the official YunoHost catalog.
 
 ### `categories.toml` and `antifeatures.toml`
 
@@ -25,11 +25,9 @@ This file is for apps that are long-term not-working and unlikely to be ever rev
 
 ### `wishlist.toml`
 
-This file contains apps that users wish to be packaged. If you want to help YunoHost, check it out!
-
-It is [browsable online](https://apps.yunohost.org/wishlist).
+This file contains apps that I'd like to package.
 
 ### `rejectedlist.toml`
 
-This file contains apps that will not be packaged, because of incompatibilities with the YunoHost project.
+This file contains apps that will not be packaged in this catalog.
 It is used to prevent apps to be added to the wishlist.
