@@ -7,8 +7,6 @@ on:
 
 jobs:
   maintenance:
-    if: github.actor != 'yunohost-bot'
-
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -16,7 +14,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.YUNOHOST_BOT_TOKEN }}
           fetch-depth: 0 # Pull full history so git diff can trace back correctly
 
       # --- Workflow 1: added_dates.yml Logic ---
@@ -25,6 +22,7 @@ jobs:
         with:
           repository: YunoHost/apps-tools
           path: tools
+          ref: dd5882fb6e1da7003f023dced2fe45ac82eb7daf
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -42,8 +40,6 @@ jobs:
         with:
           commit_message: "Automatically add dates to the catalog files"
           file_pattern: 'apps.toml wishlist.toml graveyard.toml'
-          commit_user_name: yunohost-bot
-          commit_user_email: yunohost-bot@users.noreply.github.com
 
       # --- Workflow 2: auto_format_toml.yaml Logic ---
       - uses: uncenter/setup-taplo@v1
@@ -53,9 +49,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: ":art: Format TOML with Taplo"
-          file_pattern: 'apps.toml wishlist.toml graveyard.toml'
-          commit_user_name: yunohost-bot
-          commit_user_email: yunohost-bot@users.noreply.github.com
+          file_pattern: 'antifeatures.toml apps.toml categories.toml graveyard.toml rejectedlist.toml taplo.toml'
 
       # --- Workflow 3: optimize_logos.yml Logic ---
       - name: Check for logo changes in original push
@@ -64,7 +58,7 @@ jobs:
           # Use native git diff to check files matching 'logos/*.png' between 
           # the commit before the push started and the initial pushed state.
           # github.event.before is the pre-push state, github.sha is the original user push commit.
-          CHANGED_LOGOS=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^logos/.*\.png$' || true)
+          CHANGED_LOGOS=$(git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} | grep '^logos/.*\.png$' || true)
           
           if [ -n "$CHANGED_LOGOS" ]; then
             echo "logos_changed=true" >> $GITHUB_OUTPUT

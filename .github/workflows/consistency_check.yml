@@ -17,6 +17,7 @@ jobs:
       with:
         repository: YunoHost/apps-tools
         path: tools
+        ref: dd5882fb6e1da7003f023dced2fe45ac82eb7daf
         fetch-depth: 0
 
     - name: Set up Python 3.11
@@ -36,6 +37,10 @@ jobs:
       run: |
         ./tools/catalog_linter.py --apps-dir .
 
+    - name: Fetch the apps' repositories
+      run: |
+        ./tools/app_caches.py --apps-dir .
+
     - name: Check the generation of the app catalog
       run: |
-        ./tools/list_builder.py --apps-dir .
+        python3 build_catalog.py tools .apps_cache builds/default
