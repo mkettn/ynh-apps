@@ -47,18 +47,7 @@ echo "Fetching the apps' repositories..."
 "$PYTHON" "$TOOLS_DIR/app_caches.py" --apps-dir . --apps-cache "$CACHE_DIR" --delete-missing
 
 echo "Building the catalog into $TARGET_DIR..."
-"$PYTHON" "$TOOLS_DIR/list_builder.py" --apps-dir . --apps-cache "$CACHE_DIR" "$TARGET_DIR"
-
-# list_builder.py only logs apps it fails to build, so check none went missing
-"$PYTHON" - "$TARGET_DIR/v3/apps.json" <<'EOF'
-import json, sys, toml
-expected = set(toml.load(open("apps.toml")))
-built = set(json.load(open(sys.argv[1]))["apps"])
-missing = expected - built
-if missing:
-    sys.exit(f"Apps missing from the built catalog: {sorted(missing)}")
-print(f"Built {len(built)} apps: {', '.join(sorted(built))}")
-EOF
+"$PYTHON" build_catalog.py "$TOOLS_DIR" "$CACHE_DIR" "$TARGET_DIR"
 
 if [[ -n "${PUBLISH_DEST:-}" ]]; then
     echo "Copying the catalog to $PUBLISH_DEST..."

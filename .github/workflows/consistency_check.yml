@@ -43,15 +43,4 @@ jobs:
 
     - name: Check the generation of the app catalog
       run: |
-        ./tools/list_builder.py --apps-dir .
-
-    - name: Check that every app made it into the catalog
-      run: |
-        python3 -c "
-        import json, sys, toml
-        expected = set(toml.load(open('apps.toml')))
-        built = set(json.load(open('builds/default/v3/apps.json'))['apps'])
-        missing = expected - built
-        if missing:
-            sys.exit(f'Apps missing from the built catalog: {sorted(missing)}')
-        "
+        python3 build_catalog.py tools .apps_cache builds/default

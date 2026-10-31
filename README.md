@@ -35,7 +35,10 @@ It is used to prevent apps to be added to the wishlist.
 ## Publishing the catalog
 
 `publish_catalog.sh` builds the catalog with YunoHost's
-[apps-tools](https://github.com/YunoHost/apps-tools):
+[apps-tools](https://github.com/YunoHost/apps-tools), through `build_catalog.py`.
+Unlike apps-tools' own `list_builder.py`, it doesn't push the app list to the
+YunoHost forum, report errors to YunoHost's Matrix rooms, or pull results from
+YunoHost's dev CI:
 
 ```bash
 ./publish_catalog.sh                     # writes builds/default/
