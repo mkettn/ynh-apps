@@ -17,6 +17,7 @@ jobs:
       with:
         repository: YunoHost/apps-tools
         path: tools
+        ref: dd5882fb6e1da7003f023dced2fe45ac82eb7daf
         fetch-depth: 0
 
     - name: Set up Python 3.11
@@ -36,6 +37,21 @@ jobs:
       run: |
         ./tools/catalog_linter.py --apps-dir .
 
+    - name: Fetch the apps' repositories
+      run: |
+        ./tools/app_caches.py --apps-dir .
+
     - name: Check the generation of the app catalog
       run: |
         ./tools/list_builder.py --apps-dir .
+
+    - name: Check that every app made it into the catalog
+      run: |
+        python3 -c "
+        import json, sys, toml
+        expected = set(toml.load(open('apps.toml')))
+        built = set(json.load(open('builds/default/v3/apps.json'))['apps'])
+        missing = expected - built
+        if missing:
+            sys.exit(f'Apps missing from the built catalog: {sorted(missing)}')
+        "
