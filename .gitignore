@@ -13,6 +13,7 @@ __pycache__/
 
 # Legacy tools subdirectory
 /tools/
+/.apps-tools/
 
 # yunohost specific cache/output dirs
 .apps_cache

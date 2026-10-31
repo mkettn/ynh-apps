@@ -31,3 +31,27 @@ This file contains apps that I'd like to package.
 
 This file contains apps that will not be packaged in this catalog.
 It is used to prevent apps to be added to the wishlist.
+
+## Publishing the catalog
+
+`publish_catalog.sh` builds the catalog with YunoHost's
+[apps-tools](https://github.com/YunoHost/apps-tools):
+
+```bash
+./publish_catalog.sh                     # writes builds/default/
+./publish_catalog.sh /some/served/dir    # writes somewhere else
+PUBLISH_DEST=user@host:/var/www/catalog ./publish_catalog.sh   # also rsyncs it there
+```
+
+Serve the output directory over HTTPS (for example with a My Webapp), so that
+`<catalog url>/v3/apps.json` is reachable. Then on each YunoHost server, add the
+catalog to `/etc/yunohost/apps_catalog.yml`, next to the default one:
+
+```yaml
+- id: default
+  url: https://app.yunohost.org/default
+- id: mkettn
+  url: https://<your host>/catalog
+```
+
+and run `yunohost tools update apps`.
